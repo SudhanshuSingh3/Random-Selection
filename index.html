@@ -8,26 +8,59 @@
   </head>
   <body>
     <h2>The number of Users are: <span id="count"></span></h2>
+    <button onclick="randomSearch()">Click here to View User</button>
+    <h2><span id="name"></span></h2>
+    <h2><span id="age"></span></h2>
+
+    <h2></h2>
   </body>
   <script>
-    let users = {
-      a: { name: "a", address: "XYZ" },
-      b: { name: "c", address: "XYZ" },
-      c: { name: "c", address: "XYZ" },
-      d: { name: "e", address: "XYZ" },
-      e: { name: "f", address: "XYZ" },
-      f: { name: "g", address: "XYZ" },
-      g: { name: "h", address: "XYZ" },
-      h: { name: "i", address: "XYZ" },
-      i: { name: "j", address: "XYZ" },
-      j: { name: "k", address: "XYZ" },
-    };
-    let count = 0;
+    let users = [
+      { name: "John", age: 22 },
+      { name: "Peter", age: 20 },
+      { name: "Mark", age: 23 },
+      { name: "John11", age: 22 },
+      { name: "Peter11", age: 20 },
+      { name: "Mark11", age: 23 },
+      { name: "John22", age: 22 },
+      { name: "Peter22", age: 20 },
+      { name: "Mark22", age: 23 },
+    ];
+    var count = 0;
 
     for (let item in users) {
       count++;
     }
+    let len = count;
     document.getElementById("count").innerHTML = count;
-    console.log(count);
+    // console.log(count);
+
+    let temp = JSON.parse(JSON.stringify(users));
+    // console.log(temp);
+    let firstList = [];
+    // for (let i in users) {
+    //   console.log(i);
+    // }
+    var i = 0;
+
+    function randomSearch() {
+      if (count != 0) {
+        let randomNumber = Math.floor(Math.random() * len);
+        //console.log(temp[randomNumber]);
+        firstList.push(temp[randomNumber].name);
+        console.log(temp[randomNumber].name);
+        if (firstList[i] != temp[randomNumber].name) {
+          document.getElementById("name").innerHTML =
+            "Name of the user is " + temp[randomNumber].name;
+          document.getElementById("age").innerHTML =
+            "Age is " + temp[randomNumber].age;
+          count--;
+          i++;
+        }
+
+        console.log(count);
+        document.getElementById("count").innerHTML = count;
+      }
+    }
   </script>
 </html>
