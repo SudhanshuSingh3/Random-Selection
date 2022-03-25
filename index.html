@@ -7,8 +7,11 @@
     <title>Random-Selection</title>
   </head>
   <body>
-    <h2>The number of Users are: <span id="count"></span></h2>
-    <button onclick="randomSearch()">Click here to View User</button>
+    <h2>The number of Avilable Users are: <span id="count"></span></h2>
+    <div>
+      <button onclick="randomSearch()">Click here to View User</button>
+      <h3><a href="show.html">Click here to show user</a></h3>
+    </div>
     <h2><span id="name"></span></h2>
     <h2><span id="age"></span></h2>
 
@@ -26,40 +29,46 @@
       { name: "Peter22", age: 20 },
       { name: "Mark22", age: 23 },
     ];
-    var count = 0;
-
-    for (let item in users) {
-      count++;
-    }
-    let len = count;
-    document.getElementById("count").innerHTML = count;
-    // console.log(count);
 
     let temp = JSON.parse(JSON.stringify(users));
-    // console.log(temp);
+    function init() {
+      if (localStorage.getItem("count") === null) {
+        var count = users.length;
+        localStorage.setItem("count", count);
+      } else {
+        document.getElementById("count").innerHTML = parseInt(
+          localStorage.getItem("count")
+        );
+      }
+    }
+    init();
+
+    document.getElementById("count").innerHTML = parseInt(
+      localStorage.getItem("count")
+    );
+
+    let tempList = [];
     let firstList = [];
-    // for (let i in users) {
-    //   console.log(i);
-    // }
-    var i = 0;
 
     function randomSearch() {
-      if (count != 0) {
-        let randomNumber = Math.floor(Math.random() * len);
-        //console.log(temp[randomNumber]);
-        firstList.push(temp[randomNumber].name);
-        console.log(temp[randomNumber].name);
-        if (firstList[i] != temp[randomNumber].name) {
-          document.getElementById("name").innerHTML =
-            "Name of the user is " + temp[randomNumber].name;
-          document.getElementById("age").innerHTML =
-            "Age is " + temp[randomNumber].age;
-          count--;
-          i++;
-        }
+      if (parseInt(localStorage.getItem("count")) > 0) {
+        let randomNumber = Math.floor(Math.random() * temp.length);
+        console.log(randomNumber);
+        document.getElementById("name").innerHTML =
+          "Name of the user is " + temp[randomNumber].name;
+        document.getElementById("age").innerHTML =
+          "Age is " + temp[randomNumber].age;
+        firstList.push(temp[randomNumber]);
+        localStorage.setItem("firstlist", JSON.stringify(firstList));
+        temp.splice(randomNumber, 1);
+        console.log(firstList);
 
-        console.log(count);
-        document.getElementById("count").innerHTML = count;
+        count = parseInt(localStorage.getItem("count"));
+        count--;
+        localStorage.setItem("count", count);
+        document.getElementById("count").innerHTML =
+          localStorage.getItem("count");
+        console.log(localStorage.getItem("count"));
       }
     }
   </script>
